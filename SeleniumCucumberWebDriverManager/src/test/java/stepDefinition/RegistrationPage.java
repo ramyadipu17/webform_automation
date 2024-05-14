@@ -1,5 +1,6 @@
 package stepDefinition;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -36,5 +37,23 @@ public class RegistrationPage {
     @Then("User should be able to view the successful message")
     public void userShouldBeAbleToViewTheSuccessfulMessage() {
         visibility_of_success_msg();
+    }
+
+    @And("User should navigate to capcha validation")
+    public void userShouldNavigateToCapchaValidation() throws InterruptedException, IOException {
+        navigateCaptcha();
+        captchaSubmit();
+        takeScreenshot(driver,"form_submitted");
+    }
+
+    @Given("User does not enter any value")
+    public void userDoesNotEnterAnyValue() {
+        
+    }
+
+    @Then("Error message must be shown")
+    public void errorMessageMustBeShown() throws IOException {
+        visibility_of_error_msg();
+        takeScreenshot(driver,"form_submitted");
     }
 }

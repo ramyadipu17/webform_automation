@@ -23,6 +23,8 @@ public class RegistrationPage extends BrowserDriver {
     public static String password_xpath="//*[@id=\"pwd\"]";
     public static String submit_btn_xpath="//*[@id=\"first_form\"]/div/div[2]/center/input";
     public static String registration_success_msg_xpath="/html/body/center[1]/h1";
+    public static String captcha_submit="//*[@id=\"recaptcha-demo-submit\"]";
+    public static String error_msg="//*[@id=\"first_form\"]/div/span";
 
     public static void visibility_of_registration_page(){
     String actualpage_text=driver.findElement(By.xpath(registration_page_xpath)).getText();
@@ -64,6 +66,7 @@ public class RegistrationPage extends BrowserDriver {
     }
 
     public static void click_submit_btn(){
+
         driver.findElement(By.xpath(submit_btn_xpath)).click();
     }
 
@@ -72,9 +75,23 @@ public class RegistrationPage extends BrowserDriver {
         assertEquals(actual_msg,"User Registered Successfully !!!");
     }
 
+    public static void visibility_of_error_msg(){
+        String actual_error=driver.findElement(By.xpath(error_msg)).getText();
+        assertEquals(actual_error,"This field is required");
+    }
+
     public static void takeScreenshot(WebDriver driver, String fileName) throws IOException {
         File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshotFile, new File("screenshot_" + fileName + ".png"));
+    }
+
+    public static void navigateCaptcha() throws InterruptedException {
+        driver.navigate().to("https://www.google.com/recaptcha/api2/demo");
+        Thread.sleep(20000);
+    }
+
+     public static void captchaSubmit(){
+        driver.findElement(By.xpath(captcha_submit)).click();
     }
 
 }
